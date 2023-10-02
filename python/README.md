@@ -2,9 +2,11 @@
 
 ![messageWay](../assets/logo-fa.png)
 
+![Python Examples][ico-python]
+
 # راه‌پیام
 
-این راهنما برای کار با سامانه راه‌پیام (MessageWay) و با استفاده از زبان `C#`نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
+این راهنما برای کار با سامانه راه‌پیام [MessageWay]([link-messageWay]) و با استفاده از زبان Python نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
 
 ## فهرست
 - [مثال سایر زبان‌ها](../README.md)
@@ -18,6 +20,11 @@
   - [ارسال پیامک با الگوی شخصی](#ارسال-پیامک-با-الگوی-شخصی-)
   - [ارسال OTP از طریق پیام‌رسان گپ](#ارسال-otp-از-طریق-پیامرسان-گپ-)
 
+
+## نیازمندی‌ها
+
+- کتابخانه [requests](https://pypi.org/project/requests/)
+- کتابخانه [json](https://docs.python.org/3/library/json.html)
 
 ## نکات ضروری
 
@@ -42,16 +49,21 @@
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
+```python
+import json
+import requests
+
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 3,
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
 ```
 
 ---
@@ -64,18 +76,23 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3,\"code\": \"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```python
+import json
+import requests
 
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 3,
+    "code": "123456",  # حداکثر 32 کاراکتر می‌تواند باشد
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
+``` 
 ---
 <div dir=rtl>
 
@@ -85,18 +102,26 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 6, \"params\":[\"راه پیام\", \"msgway.com\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```python
+import json
+import requests
 
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 6,
+    "params": [
+        "راه پیام"
+        "msgway.com"
+    ]
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
+``` 
 ---
 <div dir=rtl>
 
@@ -107,17 +132,23 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"ivr\",\"templateID\": 2,\"code\":\"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```python
+import json
+import requests
+
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "ivr",
+    "templateID": 2,
+    "code": "123456",
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
+``` 
 
 ---
 <div dir=rtl>
@@ -139,17 +170,26 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 * هنگام تعریف الگو، اگر برای استفاده‌ای غیر از کد OTP باشه، لازمه که عبارت `لغو11` به انتهای پیام اضافه کنید. در غیر اینصورت بصورت اتوماتیک توسط سیستم اضافه می‌شود.
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 12345,\"params\":[\"احسان\",\"xyz123mxb\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```python
+import json
+import requests
+
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 12345,
+    "params": [
+        "احسان"
+        "xyz123mxb"
+    ]
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
+``` 
 
 ---
 <div dir=rtl>
@@ -160,20 +200,31 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"messenger\",\"templateID\": 10,\"provider\":2, \"code\":\"123456\",\"params\":[\"پارامتر تست\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```python
+import json
+import requests
+
+headers = {
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+}
+body = {
+    "mobile": "+98935XXXXXXX",
+    "method": "messenger",
+    "templateID": 10,
+    "provider": 2,  # عدد ۲ برای پیام رسان گپ ثابت است
+    "code": "123456",
+    "params": ["پارامتر تست"]  # هر پارامتر حداکثر ۴۰ کاراکتر است
+}
+response = requests.post("https://api.msgway.com/send", headers=headers, data=json.dumps(body))
+print(response)
+
+``` 
 
 ---
 
+
+
+[ico-python]: https://img.shields.io/badge/Python-3d75a4
 
 [ico-sms]: https://img.shields.io/badge/SMS-085400
 
