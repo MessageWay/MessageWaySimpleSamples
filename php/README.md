@@ -2,9 +2,11 @@
 
 ![messageWay](../assets/logo-fa.png)
 
+![Raw PHP Examples][ico-rawphp]
+
 # راه‌پیام
 
-این راهنما برای کار با سامانه راه‌پیام (MessageWay) و با استفاده از زبان `C#`نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
+این راهنما برای کار با سامانه راه‌پیام (MessageWay) و با استفاده از زبان PHP بدون نیاز به composer نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
 
 ## فهرست
 - [مثال سایر زبان‌ها](../README.md)
@@ -18,6 +20,12 @@
   - [ارسال پیامک با الگوی شخصی](#ارسال-پیامک-با-الگوی-شخصی-)
   - [ارسال OTP از طریق پیام‌رسان گپ](#ارسال-otp-از-طریق-پیامرسان-گپ-)
 
+
+## نیازمندی‌ها
+
+- PHP 5 یا بالاتر
+- ext-curl (که بطور پیشفرض روی اکثر هاست‌ها نصب شده)
+- ext-json (که بطور پیشفرض روی اکثر هاست‌ها نصب شده)
 
 ## نکات ضروری
 
@@ -42,16 +50,25 @@
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "sms",
+    "templateID" => 3,
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
 ```
 
 ---
@@ -64,18 +81,27 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3,\"code\": \"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
-
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "sms",
+    "templateID" => 3,
+    "code" => "123456", // حداکثر 32 کاراکتر می‌تواند باشد
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
 ---
 <div dir=rtl>
 
@@ -85,18 +111,30 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 6, \"params\":[\"راه پیام\", \"msgway.com\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
-
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "sms",
+    "templateID" => 6,
+    "params" => [
+        "راه پیام"
+        "msgway.com"
+    ]   
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
 ---
 <div dir=rtl>
 
@@ -107,17 +145,27 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"ivr\",\"templateID\": 2,\"code\":\"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "ivr",
+    "templateID" => 2,
+    "code" => "123456",
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
 
 ---
 <div dir=rtl>
@@ -139,17 +187,30 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 * هنگام تعریف الگو، اگر برای استفاده‌ای غیر از کد OTP باشه، لازمه که عبارت `لغو11` به انتهای پیام اضافه کنید. در غیر اینصورت بصورت اتوماتیک توسط سیستم اضافه می‌شود.
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 12345,\"params\":[\"احسان\",\"xyz123mxb\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "sms",
+    "templateID" => 12345,
+    "params" => [
+        "احسان"
+        "xyz123mxb"
+    ]   
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
 
 ---
 <div dir=rtl>
@@ -160,20 +221,35 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"messenger\",\"templateID\": 10,\"provider\":2, \"code\":\"123456\",\"params\":[\"پارامتر تست\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "mobile" => "+98935XXXXXXX",
+    "method" => "messenger",
+    "templateID" => 10,
+    "provider" => 2, // عدد ۲ برای پیام رسان گپ ثابت است
+    "code" => "123456",
+    "params" => ["پارامتر تست"] // هر پارامتر حداکثر ۴۰ کاراکتر است
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/send',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
 
 ---
 
+
+
+[ico-rawphp]: https://img.shields.io/badge/Raw%20PHP%20%3A'(-FF0000
 
 [ico-sms]: https://img.shields.io/badge/SMS-085400
 
