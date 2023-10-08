@@ -4,7 +4,7 @@
 
 # راه‌پیام
 
-این راهنما برای کار با سامانه راه‌پیام  [MessageWay]([link-messageWay])  و با استفاده از زبان `C#`نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
+این راهنما برای کار با سامانه راه‌پیام  [MessageWay]([link-messageWay])  و با استفاده از `cURL` نوشته شده است. سعی شده که مثال‌ها کاملا شفاف و ساده باشد تا امکان استفاده از آن‌ها برای افراد مبتدی هم وجود داشته باشد.
 
 ## فهرست
 - [مثال سایر زبان‌ها](../README.md)
@@ -21,6 +21,10 @@
   - [اعتبارسنجی کد OTP](#اعتبار-سنجی-کد-otp)
 
 
+## نیازمندی‌ها
+
+- cURL
+
 ## نکات ضروری
 
 > برای ثبت نام در **سامانه راه‌پیام** حساب کاربری شما نیاز به تایید دارد و برای تایید باید تصویر کارت ملی و یا پاسپورت خود را بارگزاری نمایید. تا قبل از تایید حساب کاربری، شما فقط امکان ارسال پیام به شماره‌ای که با آن در سامانه ثبت نام کرده‌اید را دارید.
@@ -35,7 +39,7 @@
 
 ## مثال‌ها
 
-برای راحتی کار، هر مثال به صورت مستقل نوشته شده است. شما می‌توانید هرآنچه را که در هر مثال مشاهده می‌کنید به صورت کامل کپی کرده و در هاست یا کامپیوتر شخصی خود اجرا کنید.
+برای راحتی کار، هر مثال به صورت مستقل نوشته شده است. شما می‌توانید هرآنچه را که در هر مثال مشاهده می‌کنید به صورت کامل کپی کرده و از طریق terminal استفاده کنید.
 
 
 ### ارسال پیامکی  OTP  ![ico-sms]
@@ -44,16 +48,16 @@
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
+```bash
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 3
+}'
 ```
 
 ---
@@ -66,18 +70,18 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 3,\"code\": \"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
-
+```bash
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 3,
+    "code": "123456"
+}'
+``` 
 ---
 <div dir=rtl>
 
@@ -87,18 +91,21 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 6, \"params\":[\"راه پیام\", \"msgway.com\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
-
+```bash
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 6,
+    "params": [
+        "راه پیام",
+        "msgway.com"
+    ]
+}'
+``` 
 ---
 <div dir=rtl>
 
@@ -109,17 +116,18 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"ivr\",\"templateID\": 2,\"code\":\"123456\"}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```bash
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "ivr",
+    "templateID": 2,
+    "code": "123456",
+}'
+``` 
 
 ---
 <div dir=rtl>
@@ -141,17 +149,21 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 * هنگام تعریف الگو، اگر برای استفاده‌ای غیر از کد OTP باشه، لازمه که عبارت `لغو11` به انتهای پیام اضافه کنید. در غیر اینصورت بصورت اتوماتیک توسط سیستم اضافه می‌شود.
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"sms\",\"templateID\": 12345,\"params\":[\"احسان\",\"xyz123mxb\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```php
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "sms",
+    "templateID": 12345,
+    "params": [
+        "احسان",
+        "xyz123mxb"
+    ]
+}'
+``` 
 
 ---
 <div dir=rtl>
@@ -162,36 +174,37 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/send");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"mobile\": \"+98935XXXXXXX\",\"method\": \"messenger\",\"templateID\": 10,\"provider\":2, \"code\":\"123456\",\"params\":[\"پارامتر تست\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
+```bash
+curl --location 'https://api.msgway.com/send' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+    "mobile": "+98935XXXXXXX",
+    "method": "messenger",
+    "templateID": 10,
+    "provider": 2,
+    "code": "123456",
+    "params": ["پارامتر تست"]
+}'
+``` 
 
 ---
 <div dir=rtl>
 
-### دریافت وضعیت پیام ارسال شده
+### دریافت وضعیت پیام ارسال شده 
 
-برای دریافت وضعیت پیام‌هایی که قبلا ارسال کرده‌اید، میتوانید از این کد استفاده کنید.
+برای دریافت وضعیت پیام‌هایی که قبلا ارسال کرده‌اید، میتوانید از این کد استفاده کنید. 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/status");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"OTPReferenceID\": \"XXXXXXXXXXXXXXXXXXXX\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
+```bash
+curl --location 'https://api.msgway.com/status' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+	"OTPReferenceID": "XXXXXXXXXXXXXXXXXXXX"
+}'
 ``` 
 
 ---
@@ -205,20 +218,20 @@ Console.WriteLine(await response.Content.ReadAsStringAsync());
 
 </div>
 
-```csharp
-var client = new HttpClient();
-var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/otp/verify");
-request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
-request.Headers.Add("accept-language", "fa");
-var content = new StringContent("{\"OTP\": \"XXXX\",\"mobile\": \"+98935XXXXXXX\"]}", null, "application/json");
-request.Content = content;
-var response = await client.SendAsync(request);
-response.EnsureSuccessStatusCode();
-Console.WriteLine(await response.Content.ReadAsStringAsync());
+```bash
+curl --location 'https://api.msgway.com/otp/verify' \
+--header 'apiKey: XXXXXXXXXXXXXXXXXXXX' \
+--header 'accept-language: fa' \
+--header 'Content-Type: application/json' \
+--data '{
+	"mobile": "+98935XXXXXXX",
+	"OTP": "XXXX"
+}'
 ``` 
 
 ---
 
+[ico-rawphp]: https://img.shields.io/badge/Raw%20PHP%20%3A'(-FF0000
 
 [ico-sms]: https://img.shields.io/badge/SMS-085400
 
