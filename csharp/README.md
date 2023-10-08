@@ -17,6 +17,8 @@
   - [ارسال OTP از طریق تماس صوتی با کد سفارشی](#ارسال-otp-از-طریق-تماس-صوتی-با-کد-سفارشی-)
   - [ارسال پیامک با الگوی شخصی](#ارسال-پیامک-با-الگوی-شخصی-)
   - [ارسال OTP از طریق پیام‌رسان گپ](#ارسال-otp-از-طریق-پیامرسان-گپ-)
+  - [دریافت وضعیت پیام ارسال شده](#دریافت-وضعیت-پیام-ارسال-شده)
+  - [اعتبارسنجی کد OTP](#اعتبار-سنجی-کد-otp)
 
 
 ## نکات ضروری
@@ -171,6 +173,49 @@ var response = await client.SendAsync(request);
 response.EnsureSuccessStatusCode();
 Console.WriteLine(await response.Content.ReadAsStringAsync());
 ```
+
+---
+<div dir=rtl>
+
+### دریافت وضعیت پیام ارسال شده
+
+برای دریافت وضعیت پیام‌هایی که قبلا ارسال کرده‌اید، میتوانید از این کد استفاده کنید.
+</div>
+
+```csharp
+var client = new HttpClient();
+var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/status");
+request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
+request.Headers.Add("accept-language", "fa");
+var content = new StringContent("{\"OTPReferenceID\": \"XXXXXXXXXXXXXXXXXXXX\"]}", null, "application/json");
+request.Content = content;
+var response = await client.SendAsync(request);
+response.EnsureSuccessStatusCode();
+Console.WriteLine(await response.Content.ReadAsStringAsync());
+``` 
+
+---
+<div dir=rtl>
+
+### اعتبار سنجی کد OTP
+
+اگر کد OTP را سامانه راه پیام برای شما تولید کرده و برای مخاطب ارسال کرده‌اید با استفاده از این کد می‌توانید کد `OTP` را `Verify` کنید.
+
+**لازم به ذکر است اگر کد OTP را خودتان بصورت سفارشی تولید کرده‌اید، این متود برای شما کاربردی ندارد.**
+
+</div>
+
+```csharp
+var client = new HttpClient();
+var request = new HttpRequestMessage(HttpMethod.Post, "https://api.msgway.com/otp/verify");
+request.Headers.Add("apiKey", "XXXXXXXXXXXXXXXXXXXX");
+request.Headers.Add("accept-language", "fa");
+var content = new StringContent("{\"OTP\": \"XXXX\",\"mobile\": \"+98935XXXXXXX\"]}", null, "application/json");
+request.Content = content;
+var response = await client.SendAsync(request);
+response.EnsureSuccessStatusCode();
+Console.WriteLine(await response.Content.ReadAsStringAsync());
+``` 
 
 ---
 

@@ -19,6 +19,8 @@
   - [ارسال OTP از طریق تماس صوتی با کد سفارشی](#ارسال-otp-از-طریق-تماس-صوتی-با-کد-سفارشی-)
   - [ارسال پیامک با الگوی شخصی](#ارسال-پیامک-با-الگوی-شخصی-)
   - [ارسال OTP از طریق پیام‌رسان گپ](#ارسال-otp-از-طریق-پیامرسان-گپ-)
+  - [دریافت وضعیت پیام ارسال شده](#دریافت-وضعیت-پیام-ارسال-شده)
+  - [اعتبارسنجی کد OTP](#اعتبار-سنجی-کد-otp)
 
 
 ## نیازمندی‌ها
@@ -246,8 +248,64 @@ echo $response;
 ``` 
 
 ---
+<div dir=rtl>
 
+### دریافت وضعیت پیام ارسال شده 
 
+برای دریافت وضعیت پیام‌هایی که قبلا ارسال کرده‌اید، میتوانید از این کد استفاده کنید. 
+</div>
+
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "OTPReferenceID" => "XXXXXXXXXXXXXXXX",
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/status',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
+
+---
+<div dir=rtl>
+
+### اعتبار سنجی کد OTP
+
+اگر کد OTP را سامانه راه پیام برای شما تولید کرده و برای مخاطب ارسال کرده‌اید با استفاده از این کد می‌توانید کد OTP را Verify کنید.
+
+**لازم به ذکر است اگر کد OTP را خودتان بصورت سفارشی تولید کرده‌اید، این متود برای شما کاربردی ندارد.**
+
+</div>
+
+```php
+$apiKey = "XXXXXXXXXXXXXXXXXXXX";
+$params = [
+    "OTP" => "XXXX",
+    "mobile" => "+98935XXXXXXX",
+];
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.msgway.com/otp/verify',
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($params),
+    CURLOPT_HTTPHEADER => array(
+        'apiKey: ' . $apiKey,
+    ),
+));
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+``` 
+
+---
 
 [ico-rawphp]: https://img.shields.io/badge/Raw%20PHP%20%3A'(-FF0000
 
