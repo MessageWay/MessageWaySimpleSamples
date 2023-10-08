@@ -56,7 +56,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
@@ -83,7 +85,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
@@ -109,14 +113,16 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
     "method": "sms",
     "templateID": 6,
     "params": [
-        "راه پیام"
+        "راه پیام",
         "msgway.com"
     ]
 }
@@ -139,7 +145,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
@@ -177,14 +185,16 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
     "method": "sms",
     "templateID": 12345,
     "params": [
-        "احسان"
+        "احسان",
         "xyz123mxb"
     ]
 }
@@ -207,7 +217,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "mobile": "+98935XXXXXXX",
@@ -235,7 +247,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "OTPReferenceID": "XXXXXXXXXXXXXXXXXXXX",
@@ -249,9 +263,9 @@ print(response)
 
 ### اعتبار سنجی کد OTP
 
-اگر کد OTP را سامانه راه پیام برای شما تولید کرده و برای مخاطب ارسال کرده‌اید با استفاده از این کد می‌توانید کد OTP را Verify کنید.
+اگر کد `OTP` را سامانه راه پیام برای شما تولید کرده و برای مخاطب ارسال کرده‌اید با استفاده از این کد می‌توانید کد `OTP` را `Verify` کنید.
 
-**لازم به ذکر است اگر کد OTP را خودتان بصورت سفارشی تولید کرده‌اید، این متود برای شما کاربردی ندارد.**
+**لازم به ذکر است اگر کد `OTP` را خودتان بصورت سفارشی تولید کرده‌اید، این متود برای شما کاربردی ندارد.**
 
 </div>
 
@@ -260,7 +274,9 @@ import json
 import requests
 
 headers = {
-    "apiKey": "XXXXXXXXXXXXXXXXXXXX"
+    "apiKey": "XXXXXXXXXXXXXXXXXXXX",
+    "accept-language": "fa",
+    "Content-Type": "application/json"
 }
 body = {
     "OTP": "XXXX",
