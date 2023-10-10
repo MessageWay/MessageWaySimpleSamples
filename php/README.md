@@ -120,7 +120,7 @@ $params = [
     "method" => "sms",
     "templateID" => 6,
     "params" => [
-        "راه پیام"
+        "راه پیام",
         "msgway.com"
     ]   
 ];
@@ -196,7 +196,7 @@ $params = [
     "method" => "sms",
     "templateID" => 12345,
     "params" => [
-        "احسان"
+        "احسان",
         "xyz123mxb"
     ]   
 ];
