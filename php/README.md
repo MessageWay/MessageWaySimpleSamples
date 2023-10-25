@@ -63,6 +63,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -95,6 +96,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -128,6 +130,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -159,6 +162,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -204,6 +208,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -237,6 +242,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/send',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -264,6 +270,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/status',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
@@ -295,6 +302,7 @@ $curl = curl_init();
 curl_setopt_array($curl, array(
     CURLOPT_URL => 'https://api.msgway.com/otp/verify',
     CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($params),
     CURLOPT_HTTPHEADER => array(
         'apiKey: ' . $apiKey,
